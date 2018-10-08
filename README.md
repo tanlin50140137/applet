@@ -5,6 +5,8 @@ Liunx系统 git下载:
 
 git clone https://github.com/tanlin50140137/applet.git
 
+需要权限的目录和文件:
+
 system/config 目录需要读写权限,动态生成配置文件。
 
 admin/.selectionmenu.xml 文件需要读写权限，否则右侧菜单栏选中效果无效。
