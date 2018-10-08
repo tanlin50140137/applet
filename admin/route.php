@@ -26,7 +26,7 @@ $route = array(
 	'title' => array(
 		'admin' => array(
 			'link' => apth_url(),
-			'title' => 'Applet-微信开发管理系统 | SEO功能汇集'
+			'title' => 'Applet-微信开发管理系统 | PHP二次开发'
 		),
 		'login' => array(
 			'link' => apth_url(),
