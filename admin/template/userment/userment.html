@@ -1,0 +1,110 @@
+<!-- 加载CSS文件 -->
+<link href="<?php echo apth_url(THEME.'/template/userment/userment.css');?>" rel="stylesheet" type="text/css">
+
+<!-- 标题 -->
+<h1 class="bodys-inner-title box-shadow-border"><img src="<?php echo apth_url(THEME.'/images/systemuser.svg');?>" class="admin_img"/>用户管理－会员列表</h1>
+<!-- 内容模板 -->
+<div class="body-block box-shadow-border topbottom">
+	<a href="<?php echo apth_url('userment');?>" class="body-ab-list action_sel">会员列表</a>
+	<a href="<?php echo apth_url('memberlevel');?>" class="body-ab-list">会员等级</a>	
+	<div style="clear:both;"></div>
+</div>
+<!-- 业务信息列表 -->
+<div class="body-block box-shadow-border alltb">
+	<div class="floor-extbox-list">
+		<ul class="floor-tdta-list">
+		<?php if($data['level_l']==0||$data['level_l']==''): ?>
+			<li class="action_all_list"><a href="<?php echo apth_url('userment/'.$data['page']);?>">全部（<?php echo $data['totalrows'];?>）</a></li>
+		<?php else: ?>	
+			<li><a href="<?php echo apth_url('userment/'.$data['page']);?>">全部（<?php echo $data['totalrows'];?>）</a></li>
+		<?php endif; ?>	
+	<?php if(!empty($data['r_list'])):?>	
+		<?php foreach( $data['r_list'] as $k => $v ):?>
+			<li <?php echo $data['level_l']==($k+1)?'class="action_all_list"':''?> style="border-left:none;"><a href="<?php echo apth_url('userment/'.$data['page'].'/'.($k+1));?>"><?php echo $v['name']?>（<?php echo $v['count']?>）</a></li>
+		<?php endforeach; ?>
+	<?php endif; ?>			
+			<div style="clear:both;"></div>
+		</ul>
+		<div class="floor-extbox-posi"><input type="text" id="sreach" placeholder="推荐码/昵称/手机号码/支付宝帐号/邮箱 " class="sreach_txt"/><span class="sreach_txt_span" onclick="sreach_send('<?php echo $data['page'];?>','<?php echo $data['level_l'];?>')">搜索</span></div>
+	</div>
+	<!-- 
+	<div class="box-btn-list">
+		<span><a href="<?php echo apth_url('userment_team');?>" style="font-weight:bold;">查看会员团队</a></span>
+		<a href="javascript:;" class="box-gn-list" onclick="adduser()">添加会员</a>
+		<div style="clear:both;"></div>
+	</div>
+	 -->
+	<!-- 列表展示 -->
+	<div class="showallbox">
+		<table class="wx-table tableBox">
+					<tr>
+						<th>ID</th>
+						<th>头像</th>
+						<th>昵称</th>
+						<th>会员信息</th>
+						<th>推荐码</th>
+						<th>会员等级</th>
+						<th>上级ID</th>
+						<th>手机号码</th>
+						<th>支付宝帐号</th>
+						<th>余额</th>
+						<th>贝劵</th>
+						<th>归属地</th>
+						<th>创建时间</th>
+						<th>操作</th>
+					</tr>
+		<?php if(!empty($data['rows'])):?>
+			<?php foreach( $data['rows'] as $k => $v ):?>					
+					<tr>
+						<td><?php echo $v['id']?></td>
+						<td><img src="<?php echo $v['pic'];?>" class="pic_imgs"/></td>
+						<td width="100"><?php echo $v['nickname']?></td>
+						<td><input type="button" value="查看" onclick="lookinfo('<?php echo $v['id'];?>');" style="border:1px solid #79bf67;border-radius:0.2rem;padding:0.2rem 0.5rem;background:#79bf67;color:#FFFFFF;cursor:pointer;"/></td>
+				<?php if( $v['bus_pid'] >0 && $v['pid'] == 0 ):?>		
+						<td>商粉</td>
+				<?php else: ?>		
+						<td><?php echo $v['ref_code']?></td>
+				<?php endif;?>
+						<td><?php echo $v['name']?></td>
+						<td><?php echo $v['pid']?></td>
+						<td><?php echo $v['tel']?></td>
+						<td><?php echo $v['alipay']?></td>
+						<td><?php echo $v['money']?></td>
+						<td><?php echo $v['point']?></td>
+						<!-- 
+						<td><img src="<?php echo apth_url($v['qrcode']);?>" class="code_imgs" onclick="getqrcode('<?php echo $v['qrcode'];?>','<?php echo $v['id']?>')"/></td>	
+						 -->
+						<td><font><?php echo $v['province']==''?'':$v['province'].'<br/>';?><?php echo $v['city']==''?'':$v['city'].'<br/>';?><?php echo $v['area']==''?'':$v['area'];?></font></td>
+						<td style="width:100px;"><font><?php echo $v['create_time']?></font></td>
+						<td>
+							<a href="<?php echo apth_url('userment_team/'.$v['id']);?>">团队</a>
+							&nbsp;
+							<a href="<?php echo apth_url('openaccount/'.$v['id'].'/'.$data['page']);?>">对帐单</a>
+							&nbsp;
+							<a href="javascript:;" onclick="openupdateuser('<?php echo $v['id']?>','<?php echo $data['page'];?>')">更改</a>
+							&nbsp;
+							<a href="javascript:;" onclick="opendeleteuser('<?php echo $v['id']?>','<?php echo $data['page'];?>')">删除</a>
+						</td>
+					</tr>
+			<?php endforeach;?>	
+		<?php else: ?>
+				<tr>
+					<td colspan="14" class="floor-tdtable" style="font-size:1.2rem;">暂时没有数据</td>
+				</tr>
+		<?php endif;?>	
+		<?php if($data['totalrows']>$data['totalshow']):?>		
+					<tr>
+						<td colspan="14" class="floor-tdtable" style="font-size:1.2rem;">
+							<?php echo $data['page'];?>/<?php echo $data['totalpage'];?>页 
+							<a href="<?php echo apth_url('userment/'.($data['page']-1).($data['level_l']==''?'':'/'.$data['level_l']));?>" class="page_a">上一页</a> <a href="<?php echo apth_url('userment/'.($data['page']+1).($data['level_l']==''?'':'/'.$data['level_l']));?>" class="page_a">下一页</a> &nbsp;
+							<input type="text" id="getGo" class="input-getgo"/> <input type="button" value="GO" class="input-btngo" onclick="getGo('<?php echo $data['level_l'];?>')"/>
+							&nbsp; 共 <?php echo $data['totalrows'];?> 条
+						</td>
+					</tr>
+		<?php endif;?>		
+		</table>
+	</div>
+</div>
+<div style="height:3rem;"></div>
+<!-- 加载JS文件 -->
+<script src="<?php echo apth_url(THEME.'/template/userment/userment.js');?>"></script>

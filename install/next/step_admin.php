@@ -185,12 +185,7 @@ function step2()
 							<td height="25" style="text-indent:0.5em;">mbstring</td>
 							<td height="25" align="center">'.(extension_loaded('mbstring')==false?'未开启':'开启').'</td>
 							<td height="25" align="center">'.(extension_loaded('mbstring')==false?'<img src="next/images/exclamation.png" align="absmiddle"/>':'<img src="next/images/ok.png" align="absmiddle"/>').'</td>
-						</tr>
-						<tr>
-							<td height="25" style="text-indent:0.5em;">mysql</td>
-							<td height="25" align="center">'.(extension_loaded('mysql')==false?'未开启':'开启').'</td>
-							<td height="25" align="center">'.(extension_loaded('mysql')==false?'<img src="next/images/exclamation.png" align="absmiddle"/>':'<img src="next/images/ok.png" align="absmiddle"/>').'</td>
-						</tr>
+						</tr>	
 						<tr>
 							<td height="25" style="text-indent:0.5em;">mysqli</td>
 							<td height="25" align="center">'.(extension_loaded('mysqli')==false?'未开启':'开启').'</td>
@@ -328,10 +323,6 @@ function step2()
 			alert("mbstring组件未开启");
 	   		return false;
 		}
-		if( mysql == false ){
-			alert("mysql组件未开启");
-	   		return false;
-		}
 		if( mysqli == false ){
 			alert("mysqli组件未开启");
 	   		return false;
@@ -461,8 +452,8 @@ function step3()
 						<tr>
 							<td height="36" style="text-indent:0.5em;"><b>数据库驱动：</b></td>
 							<td height="36" style="text-indent:0.5em;">
-								<input type="radio" name="sql" value="1" checked="checked" id="ql1"/> <label for="ql1">MySql<label> &nbsp; &nbsp; &nbsp; 
-								<input type="radio" name="sql" value="2" id="ql2"/> <label for="ql2">MySqli<label> &nbsp; &nbsp; &nbsp; 
+								<!--<input type="radio" name="sql" value="1" id="ql1"/> <label for="ql1">MySql<label> &nbsp; &nbsp; &nbsp; -->
+								<input type="radio" name="sql" value="2" checked="checked" id="ql2"/> <label for="ql2">MySqli<label> &nbsp; &nbsp; &nbsp; 
 								<input type="radio" name="sql" value="3" id="ql3"/> <label for="ql3">PDO<label> &nbsp; &nbsp; &nbsp; 
 							</td>
 						</tr>
@@ -686,7 +677,7 @@ function step3_data()
 	    {
 		    foreach($tableArr as $k=>$v)
 		    {
-		    	$int = $mysqli->query($v) or exit('sql语法错误 '.mysqli_errno()."  <br/>\n\n  ".mysqli_error()." <br/>\n\n ".$v);
+		    	$int = $mysqli->query($v) or exit('sql语法错误 '.mysqli_errno($mysqli)."  <br/>\n\n  ".mysqli_error($mysqli)." <br/>\n\n ".$v);
 		    }
 	    }
 	    else 

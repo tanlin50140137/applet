@@ -4,9 +4,16 @@ class This_base_concet
 	private $link;
 	public function __construct()
 	{
-		$this->link = mysql_connect(SERVER,USERNAME,PASSWORD) or exit('数据库连接错误');
-		mysql_select_db(BASENAME) or exit('没有找到指定的数据库名称');
-		mysql_query('set names utf8');
+		$this->link = @new mysqli(SERVER,USERNAME,PASSWORD);
+		if ($this->link->connect_error) {
+		    die("连接失败: " . $this->link->connect_error);
+		}
+		$dbint = $this->link->select_db(BASENAME);
+		if( $dbint == false )
+		{
+			die("请选择数据库");
+		}	
+		$this->link->query("set names utf8");  
 	}
 	/**
 	 * 执行sql语句,添、删、改、查
@@ -15,9 +22,47 @@ class This_base_concet
 	 * @return 查=resource
 	 */
 	public function query($sql)
-	{
-		$resource = mysql_query($this->get_sql($sql)) or exit('sql语法错误 '.mysql_errno()."  <br/>\n\n  ".mysql_error()." <br/>\n\n ".$sql);
+	{	
+		$resource = $this->link->query($sql) or exit('sql语法错误 '.mysqli_errno($this->link)."  <br/>\n\n  ".mysqli_error($this->link)." <br/>\n\n ".$sql);
 		return $resource;
+	}
+	/**
+	 * //开启事务 - 使用说明
+		$mySQLi -> query('start transaction');
+		$mySQLi -> query('set autocommit = false'); //第二种方式
+		$mySQLi -> begin_transaction();//第三种方式	
+		//发送sql语句,因为sql语句是插入和修改语句，返回的结果是一个布尔值。
+		$res1 = $mySQLi -> query($sql1);
+		$res2 = $mySQLi -> query($sql2);		
+		if($res1 && $res2)
+		{
+		    echo '操作成功';
+		    //提交事务。
+		    $mySQLi -> commit();
+		}
+		else
+		{
+		    echo '操作失败';
+		    //进行数据的回滚
+		    $mySQLi -> rollback();
+		}	
+		$mySQLi -> close();
+	 */
+	public function transaction()
+	{
+		$this->link->query('start transaction');
+		//$this->link->query('set autocommit = false'); //第二种方式
+		//$this->link->begin_transaction();//第三种方式
+	}
+	//操作成功
+	public function commit()
+	{
+		$this->link->commit();
+	}
+	//进行数据的回滚
+	public function rollback()
+	{
+		$this->link->rollback();
 	}
 	/**
 	 * 获取总记录数
@@ -27,7 +72,7 @@ class This_base_concet
 	public function counts($sql)
 	{
 		$resource = $this->query($this->get_sql($sql));
-		$counts = mysql_num_rows($resource);
+		$counts = $resource->num_rows;
 		return $counts;
 	}
 	/**
@@ -38,7 +83,7 @@ class This_base_concet
 	public function row($sql)
 	{
 		$resource = $this->query($this->get_sql($sql));
-		$row = mysql_fetch_assoc($resource);
+		$row = $resource->fetch_assoc();
 		return $row;
 	}
 	/**
@@ -49,11 +94,16 @@ class This_base_concet
 	public function rows($sql)
 	{
 		$resource = $this->query($this->get_sql($sql));
-		$rows = array();
-		while($row = mysql_fetch_assoc($resource))
+		$rows = null;
+		if ($resource->num_rows > 0 ) 
 		{
-			$rows[] = $row; 
-		}
+	    	// 输出数据
+		    while(@$row = $resource->fetch_assoc()) 
+		    {
+		        $rows[] = $row;
+		    }
+		} 
+			
 		return $rows;
 	}
 	/**
@@ -62,7 +112,7 @@ class This_base_concet
 	 */
 	public function insert_id()
 	{
-		$id = mysql_insert_id();
+		$id = mysqli_insert_id($this->link);;
 		return $id;
 	}
 	/**
@@ -79,7 +129,7 @@ class This_base_concet
 	 */
 	public function close()
 	{
-		mysql_close($this->link);
+		$this->link->close();
 	}
 	public function __destruct()
 	{

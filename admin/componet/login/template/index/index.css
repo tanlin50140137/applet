@@ -6,6 +6,7 @@
  	background:url('../../../../componet/login/images/wxbd.png') no-repeat;
  	background-position: 50% 0;
  	position: relative;
+ 	background-size: 100% ;
 }
 .body-logo-t{
 	border:1px solid #eae9e9;

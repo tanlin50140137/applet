@@ -1,6 +1,34 @@
 /* index.html-CSS文件 */
 @CHARSET "UTF-8";
 .body-block{
- 	border:1px solid red;
  	margin-top: 0.5rem;
+ 	padding: 3rem 4rem;
+}
+.bodys-inner-title{
+	background: #FFFFFF;
+    height: 5rem;
+    line-height: 5rem;
+}
+.body-inner-list{
+	border: 1px solid #f3eded;
+	display: block;
+    float: left;
+    width: 23%;
+    margin-right: 2rem;
+    height: 13rem;
+    line-height: 13rem;
+    text-align: center;
+    border-radius: 0.2rem;
+    font-size: 2rem;
+    color: #656262;
+    background: #f8f9fb;
+    margin-bottom: 2rem;
+}
+.body-inner-list:hover{
+	background: #eaecf1;
+	color:red;
+}
+.admin_img{
+	width: 29px;
+    height: 29px;
 }

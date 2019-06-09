@@ -3,7 +3,7 @@
  * 全局公用文件，适用于所有控制
  * */
 $userrows = CheckIn();
-$xmlMenu = ReadXml( dirname(__FILE__).'/.selectionmenu.xml' );
+$idMenu = ReadSession();
 $route 	 = configuration( $userrows );
 $menu 	 = $route['menu'];
 $logo 	 = $route['logo']; 

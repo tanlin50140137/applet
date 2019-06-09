@@ -78,6 +78,19 @@ function CheckIn()
 		return $userrows;
 	}
 }
+function ReadSession()
+{
+	session_start();
+	
+	if( !isset($_SESSION['SERIDINFO_ID']) && empty($_SESSION['SERIDINFO_ID']) )
+	{
+		return 0;
+	}
+	else
+	{
+		return $_SESSION['SERIDINFO_ID'];
+	}	
+}
 function CheckInstall()
 {
 	if( !file_exists(dir_url(SYSTEM.'/config/config.php')) )

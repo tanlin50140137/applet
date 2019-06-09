@@ -1,10 +1,10 @@
 <!-- 左侧菜单栏 -->
-<ul class="bodys-inner-ul">
+<ul class="bodys-inner-ul bodys-inner-ul_action"  id="bodys-inner-ul">
 <?php if( !empty( $menu ) ){?>
 	<?php foreach( $menu as $k => $v ){ ?>
 		<li>
-			<a href="<?php echo $v['link'];?>"  <?php echo $xmlMenu['id']==$v['ind']?'class="li-a-action"':'';?> >
-				<span><img src="<?php echo apth_url(THEME.'/images/'.$v['icon'].'_'.($xmlMenu['id']==$v['ind']?'2':'1').'.svg');?>" width="25" height="25"/></span>
+			<a href="<?php echo $v['link'];?>"  <?php echo $idMenu==$v['ind']?'class="li-a-action"':'';?> >
+				<span><img src="<?php echo apth_url(THEME.'/images/'.$v['icon'].'_'.($idMenu==$v['ind']?'2':'1').'.svg');?>" width="25" height="25"/></span>
 				<font ind="<?php echo $v['ind'];?>"><?php echo $v['title'];?></font>
 			</a>
 		</li>

@@ -21,7 +21,7 @@ require 'next/step_admin.php';
 <body>
 <?php
 
-$act = $_REQUEST['act'] == ''?'step1':$_REQUEST['act'];
+@$act = $_REQUEST['act'] == ''?'step1':$_REQUEST['act'];
 	
 if( $act!=null && function_exists( $act ) )
 {

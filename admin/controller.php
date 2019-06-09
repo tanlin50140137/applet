@@ -7,9 +7,12 @@ function index()
 	
 	view( 'index/index');
 }
+function userment()
+{
+	view( 'userment/userment');
+}
 function site()
 {
-	
 	view( 'site/site' );
 }
 function keyword()
@@ -19,4 +22,16 @@ function keyword()
 function recharge()
 {
 	view( 'recharge/recharge' );
+}
+function set()
+{
+	view( 'set/set' );
+}
+function setConfig()
+{
+	view( 'setconfig/setconfig' );
+}
+function activities()
+{
+	view( 'activities/activities' );
 }

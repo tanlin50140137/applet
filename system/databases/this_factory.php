@@ -139,7 +139,7 @@ class This_Linked
 	#执行sql数据表名
 	public function from($table)
 	{
-		$this->linked[1] = __FUNCTION__." {$table} ";
+		$this->linked[1] = ' '.__FUNCTION__." {$table} ";
 		return $this;
 	}
 	#执行sql按条件查询
@@ -153,7 +153,7 @@ class This_Linked
 		{
 			foreach($where as $k=>$v)
 			{
-				$wheres .= ($wheres==''?' ':' and ').$k."='".$v."'";
+				@$wheres .= ($wheres==''?' ':' and ').$k."='".$v."'";
 			}
 			$wheres = __FUNCTION__.$wheres;
 		}
@@ -285,6 +285,55 @@ class This_Linked
 		$db = This_single_case::getConcetBase();
 		$row = $db->counts($this->sqlstr);	
 		return $row;
+	}
+	#加
+	public function sum($field)
+	{
+		$this->linked[0] = 'select '.__FUNCTION__.'('.$field.') as '.$field.' ';	
+		$this->get();
+		$row = $this->array_row();
+		return $row[$field];
+	}
+	#指定字段值
+	public function value($field)
+	{
+		$this->linked[0] = 'select '.$field.' ';	
+		$this->get();
+		$row = $this->array_row();
+		return $row[$field];
+	}
+	#自增长
+	public function setInc($table,$field,$step=1,$LazyTime=1)
+	{
+		if( $LazyTime != null )
+		{
+			sleep($LazyTime);
+		}
+		$this->linked[0] = 'update '.$table.' set '.$field.'='.$field.'+'.$step.' ';
+		$this->get();	
+		return $this->exect();
+	}
+	#自减
+	public function setDec($table,$field,$step=1,$LazyTime=1)
+	{
+		if( $LazyTime != null )
+		{
+			sleep($LazyTime);
+		}
+		$this->linked[0] = 'update '.$table.' set '.$field.'='.$field.'-'.$step.' ';
+		$this->get();	
+		return $this->exect();
+	}
+	#修改字段
+	public function setField($table,$field,$value,$LazyTime=1)
+	{
+		if( $LazyTime != null )
+		{
+			sleep($LazyTime);
+		}
+		$this->linked[0] = 'update '.$table.' set '.$field.'="'.$value.'" ';
+		$this->get();	
+		return $this->exect();
 	}
 	#########################################################################################
 	#获取sql语法字符形式

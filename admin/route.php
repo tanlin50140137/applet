@@ -47,7 +47,7 @@ $route = array(
 				'title' => '文档'
 			),
 			array(
-				'link' 	=> apth_url(),
+				'link' 	=> apth_url('set'),
 				'title' => '设置'
 			),
 			array(
@@ -87,20 +87,26 @@ $route = array(
 			'icon'	=> 'home32' /* 32x32 ；第一张名称为：home32_1 ；第二张名称为：home32_2*/
 		),
 		array(
-			'link' 	=> apth_url('site'),
+			'link' 	=> apth_url('userment'),
 			'ind'  	=> '1',	
+			'title' => '用户管理',
+			'icon'	=> 'userment32' /* 32x32 ；第一张名称为：site32_1 ；第二张名称为：site32_2*/
+		),
+		array(
+			'link' 	=> apth_url('site'),
+			'ind'  	=> '2',	
 			'title' => '站点管理',
 			'icon'	=> 'site32' /* 32x32 ；第一张名称为：site32_1 ；第二张名称为：site32_2*/
 		),
 		array(
 			'link' 	=> apth_url('keyword'),
-			'ind'  	=> '2',	
+			'ind'  	=> '3',	
 			'title' => '设置关键词',
 			'icon'	=> 'keyword32' /* 32x32 ；第一张名称为：keyword32_1 ；第二张名称为：keyword32_2*/
 		),
 		array(
 			'link' 	=> apth_url('recharge'),
-			'ind'  	=> '3',	
+			'ind'  	=> '4',	
 			'title' => '充值站点',
 			'icon'	=> 'recharge32' /* 32x32 ；第一张名称为：recharge32_1 ；第二张名称为：recharge32_2*/
 		)
