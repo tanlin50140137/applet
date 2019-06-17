@@ -36,7 +36,7 @@ Applet User PHP 最终用户授权协议
 
 感谢您选择Applet。 Applet 基于 PHP 的技术开发，采用 MySQL作为数据库，全部源码开放。希望我们的努力能为您提供一个高效快速、强大的站点解决方案。
 
-Applet官方网址：http://www.applet.com
+Applet官方网址：http://www.applet***.com
 
 为了使您正确并合法的使用本软件，请您在使用前务必阅读清楚下面的协议条款：
 
